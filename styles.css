@@ -90,7 +90,7 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   padding: 56px 20px 0 110px;
-  min-height: 700px;
+  min-height: 760px;
   scroll-margin-top: calc(var(--header-height) + 20px);
 }
 
