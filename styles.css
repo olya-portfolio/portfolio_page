@@ -32,10 +32,6 @@ body {
   padding: 0 48px 40px;
 }
 
-main {
-  padding-top: 26px;
-}
-
 .site-header {
   position: sticky;
   top: 0;
@@ -93,7 +89,7 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 18px 20px 0 110px;
+  padding: 56px 20px 0 110px;
   min-height: 700px;
   scroll-margin-top: calc(var(--header-height) + 20px);
 }
