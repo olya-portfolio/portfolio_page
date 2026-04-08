@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olya Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Abel&family=Great+Vibes&family=Inter:wght@300;400;500&family=Kristi&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="site-header" id="home" data-section>
+      <div class="logo">Olya</div>
+
+      <nav class="main-nav" aria-label="Главное меню">
+        <a class="active" href="#home">Работы</a>
+        <a href="#about">Обо мне</a>
+        <a href="#services">Услуги</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero reveal" id="works" data-section>
+        <div class="hero-main">
+          <div class="photo-window">
+            <div class="window-bar">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="window-title">OLYA_FINAL_FINAL.png</span>
+            </div>
+
+            <div class="portrait">
+              <div class="portrait-placeholder"></div>
+            </div>
+          </div>
+
+          <div class="hero-yep" data-motion>Yep!</div>
+
+          <div class="hero-about" data-motion>
+            <div class="hero-about-title">Это Я.</div>
+
+            <div class="hero-about-subtitle">
+              <span class="hero-kristi">
+                та, с кем вам предстоит<br>
+                иметь дело
+              </span>
+              <span class="hero-abel">(sorry not sorry)</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-folders" aria-label="Разделы портфолио">
+          <button class="folder" type="button" data-folder="Surf_Coffee" data-target="#works">
+            <span class="folder-icon" aria-hidden="true"></span>
+            <span class="folder-name">Surf_Coffee</span>
+          </button>
+
+          <button class="folder" type="button" data-folder="Photo" data-target="#works">
+            <span class="folder-icon" aria-hidden="true"></span>
+            <span class="folder-name">Photo</span>
+          </button>
+
+          <button class="folder" type="button" data-folder="Video" data-target="#works">
+            <span class="folder-icon" aria-hidden="true"></span>
+            <span class="folder-name">Video</span>
+          </button>
+        </aside>
+      </section>
+
+      <section class="about-skills reveal" id="about" data-section>
+        <div class="about-column">
+          <h2>Обо мне</h2>
+          <p>
+            Оля, контент-креатор и<br>
+            SMM-специалист.
+          </p>
+        </div>
+
+        <div class="skills-column" id="services" data-section>
+          <h2>Вот, что я могу:</h2>
+
+          <ul class="skills-list">
+            <li>Создавать живой и вовлекающий контент, который не хочется пролистывать.</li>
+            <li>Вести канал под ключ: от стратегии до ежедневного постинга и аналитики.</li>
+            <li>Работать по ТЗ, понимая боли бренда и желания аудитории.</li>
+            <li>Снимать и монтировать видео, которые залетают в рекомендации.</li>
+            <li>Быстро включаться в задачи любой сложности.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="work-style reveal" data-section>
+        <div class="quote-card">
+          <div class="quote-label">КАК Я РАБОТАЮ</div>
+          <blockquote>
+            «Люблю неформальный подход, честную<br>
+            коммуникацию и когда результат говорит<br>
+            сам за себя».
+          </blockquote>
+        </div>
+      </section>
+
+      <footer class="contacts reveal" id="contacts" data-section>
+        <div class="contacts-left">
+          <div class="contacts-caption">СВЯЖИТЕСЬ СО МНОЙ</div>
+
+          <a class="contact-row contact-link" href="https://t.me/ssaintolga" target="_blank" rel="noopener noreferrer">
+            <span class="contact-icon" aria-hidden="true">➤</span>
+            <span class="contact-info">
+              <span class="contact-type">TELEGRAM</span>
+              <span class="contact-value">@ssaintolga</span>
+            </span>
+          </a>
+
+          <a class="contact-row contact-link" href="tel:+79224115241">
+            <span class="contact-icon" aria-hidden="true">◔</span>
+            <span class="contact-info">
+              <span class="contact-type">PHONE</span>
+              <span class="contact-value">+7 922 411 52 41</span>
+            </span>
+          </a>
+        </div>
+
+        <div class="contacts-right">
+          Готова к новым вызовам и<br>
+          интересным проектам.
+        </div>
+      </footer>
+    </main>
+
+    <div class="toast" id="folder-toast" role="status" aria-live="polite" aria-atomic="true"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
