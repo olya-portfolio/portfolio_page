@@ -736,3 +736,126 @@ body {
     transform: none;
   }
 }
+
+.surf-works {
+  border-top: 1px solid var(--line);
+  margin-top: 6px;
+  padding: 50px var(--side-gap) 10px;
+  scroll-margin-top: calc(var(--header-height) + 20px);
+}
+
+.section-head {
+  max-width: 780px;
+  margin-bottom: 30px;
+}
+
+.section-kicker {
+  margin: 0 0 14px;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  color: #6a6a6a;
+}
+
+.section-head h1,
+.section-head h2 {
+  margin: 0 0 10px;
+  font-size: clamp(34px, 4.2vw, 58px);
+  line-height: 0.96;
+  font-weight: 500;
+}
+
+.section-text {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+  color: #3a3a3a;
+}
+
+.section-text code {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85em;
+  background: #ececec;
+  border-radius: 7px;
+  padding: 2px 7px;
+}
+
+.surf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.work-card {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  background: #f3f3f3;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+  border: 1px solid #ececec;
+  overflow: hidden;
+}
+
+.work-media {
+  background: #d7d7d7;
+  aspect-ratio: 9 / 16;
+  max-height: min(72vh, 680px);
+}
+
+.work-media iframe,
+.work-media img,
+.work-media video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+  object-fit: cover;
+}
+
+.work-content {
+  padding: 16px 16px 18px;
+}
+
+.work-content h3 {
+  margin: 0 0 8px;
+  font-size: 27px;
+  line-height: 0.95;
+}
+
+.work-content p {
+  margin: 0;
+  font-size: 18px;
+  color: #353535;
+  line-height: 1.12;
+}
+
+.work-meta {
+  display: inline-flex;
+  margin-top: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #6d6d6d;
+}
+
+.surf-empty {
+  padding: 24px;
+  background: #efefef;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .surf-works {
+    padding-inline: 0;
+    padding-top: 34px;
+  }
+
+  .section-text {
+    font-size: 18px;
+  }
+
+  .work-content h3 {
+    font-size: 24px;
+  }
+}

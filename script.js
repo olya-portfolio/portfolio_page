@@ -6,8 +6,10 @@ const SELECTORS = {
   folders: '.folder[data-folder]',
   motion: '[data-motion]',
   toast: '#folder-toast',
+  surfGrid: '#surf-grid',
 };
 
+const SURF_WORKS_PATH = './data/surf-works.json';
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function getHeaderOffset() {
@@ -104,11 +106,12 @@ function initRevealAnimations() {
 function initFolderInteractions() {
   const folders = document.querySelectorAll(SELECTORS.folders);
   const toast = document.querySelector(SELECTORS.toast);
-  if (!folders.length || !toast) return;
+  if (!folders.length) return;
 
   let toastTimer;
 
   const showToast = (label) => {
+    if (!toast) return;
     toast.textContent = `${label}: раздел в разработке, скоро наполним кейсами.`;
     toast.classList.add('is-visible');
 
@@ -121,11 +124,20 @@ function initFolderInteractions() {
   folders.forEach((folder) => {
     folder.addEventListener('click', () => {
       const label = folder.dataset.folder || 'Раздел';
+      const pageUrl = folder.dataset.page;
+      if (pageUrl) {
+        window.location.href = pageUrl;
+        return;
+      }
+
       const targetId = folder.dataset.target;
       if (targetId) {
         scrollToTarget(targetId);
       }
-      showToast(label);
+
+      if (label !== 'Surf_Coffee') {
+        showToast(label);
+      }
     });
   });
 }
@@ -166,6 +178,107 @@ function initStickyHeader() {
   window.addEventListener('scroll', toggleHeader, { passive: true });
 }
 
+function getRutubeEmbedUrl(url) {
+  const match = url.match(/rutube\.ru\/(?:shorts|video)\/([a-zA-Z0-9]+)/);
+  if (!match) return null;
+  return `https://rutube.ru/play/embed/${match[1]}`;
+}
+
+function detectMediaType(url) {
+  if (/\.(jpg|jpeg|png|webp|gif)$/i.test(url)) return 'image';
+  if (/\.(mp4|webm|mov)$/i.test(url)) return 'video';
+  if (/rutube\.ru/i.test(url) || /youtube\.com|youtu\.be|vimeo\.com/i.test(url)) return 'embed';
+  return 'link';
+}
+
+function createMediaElement(item) {
+  const mediaWrap = document.createElement('div');
+  mediaWrap.className = 'work-media';
+
+  const mediaType = detectMediaType(item.url || '');
+
+  if (mediaType === 'image') {
+    const img = document.createElement('img');
+    img.src = item.url;
+    img.alt = item.title || 'Работа';
+    img.loading = 'lazy';
+    mediaWrap.append(img);
+    return mediaWrap;
+  }
+
+  if (mediaType === 'video') {
+    const video = document.createElement('video');
+    video.src = item.url;
+    video.controls = true;
+    video.preload = 'metadata';
+    mediaWrap.append(video);
+    return mediaWrap;
+  }
+
+  if (mediaType === 'embed') {
+    const iframe = document.createElement('iframe');
+    const rutubeEmbedUrl = getRutubeEmbedUrl(item.url || '');
+    iframe.src = rutubeEmbedUrl || item.url;
+    iframe.title = item.title || 'Встроенное видео';
+    iframe.loading = 'lazy';
+    iframe.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
+    iframe.allowFullscreen = true;
+    mediaWrap.append(iframe);
+    return mediaWrap;
+  }
+
+  mediaWrap.textContent = 'Добавьте ссылку на изображение или видео, чтобы работа отобразилась здесь.';
+  return mediaWrap;
+}
+
+function createWorkCard(item) {
+  const article = document.createElement('article');
+  article.className = 'work-card reveal';
+
+  article.append(createMediaElement(item));
+
+  const content = document.createElement('div');
+  content.className = 'work-content';
+
+  const title = document.createElement('h3');
+  title.textContent = item.title || 'Без названия';
+
+  const desc = document.createElement('p');
+  desc.textContent = item.description || 'Описание появится после заполнения JSON.';
+
+  const meta = document.createElement('span');
+  meta.className = 'work-meta';
+  meta.textContent = 'SURF COFFEE CASE';
+
+  content.append(title, desc, meta);
+  article.append(content);
+  return article;
+}
+
+async function loadSurfWorks() {
+  const grid = document.querySelector(SELECTORS.surfGrid);
+  if (!grid) return;
+
+  try {
+    const response = await fetch(SURF_WORKS_PATH, { cache: 'no-store' });
+    if (!response.ok) throw new Error('Не удалось загрузить работы.');
+
+    const items = await response.json();
+    if (!Array.isArray(items) || !items.length) {
+      grid.innerHTML = '<div class="surf-empty">Пока нет работ. Добавьте первую запись в data/surf-works.json.</div>';
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    items.forEach((item) => fragment.append(createWorkCard(item)));
+    grid.innerHTML = '';
+    grid.append(fragment);
+    initRevealAnimations();
+  } catch (error) {
+    grid.innerHTML = '<div class="surf-empty">Не удалось загрузить кейсы. Проверьте файл data/surf-works.json.</div>';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initActiveNav();
@@ -173,4 +286,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initFolderInteractions();
   initHeroMotion();
   initStickyHeader();
+  loadSurfWorks();
 });
