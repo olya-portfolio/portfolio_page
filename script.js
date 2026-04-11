@@ -185,10 +185,17 @@ function getRutubeEmbedUrl(url) {
 }
 
 function detectMediaType(url) {
-  if (/\.(jpg|jpeg|png|webp|gif)$/i.test(url)) return 'image';
-  if (/\.(mp4|webm|mov)$/i.test(url)) return 'video';
-  if (/rutube\.ru/i.test(url) || /youtube\.com|youtu\.be|vimeo\.com/i.test(url)) return 'embed';
-  return 'link';
+  const normalizedUrl = (url || '').toLowerCase();
+
+  if (/\.(jpg|jpeg|png|webp|gif|avif|heic)(\?|#|$)/i.test(normalizedUrl)) return 'image';
+  if (/\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(normalizedUrl)) return 'video';
+  if (/rutube\.ru|youtube\.com|youtu\.be|vimeo\.com/i.test(normalizedUrl)) return 'embed';
+
+  if (/imgur\.com|flickr\.com|postimg\.|cloudinary\.com|googleusercontent\.com|yandex\./i.test(normalizedUrl)) {
+    return 'image';
+  }
+
+  return 'image';
 }
 
 
@@ -246,7 +253,20 @@ function createMediaElement(item, card) {
     return mediaWrap;
   }
 
-  mediaWrap.textContent = 'Добавьте ссылку на изображение или видео, чтобы работа отобразилась здесь.';
+  const imageFallback = document.createElement('img');
+  imageFallback.src = item.url || '';
+  imageFallback.alt = item.title || 'Работа';
+  imageFallback.loading = 'lazy';
+
+  imageFallback.addEventListener('load', () => {
+    setOrientationBySize(card, imageFallback.naturalWidth, imageFallback.naturalHeight);
+  }, { once: true });
+
+  imageFallback.addEventListener('error', () => {
+    mediaWrap.textContent = 'Не удалось загрузить медиа. Для фото используйте прямую ссылку на файл (jpg/png/webp).';
+  }, { once: true });
+
+  mediaWrap.append(imageFallback);
   return mediaWrap;
 }
 
