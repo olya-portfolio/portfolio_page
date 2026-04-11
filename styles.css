@@ -23,7 +23,8 @@ body {
 }
 
 body {
-  font-family: "Tinos", serif;
+  font-family: 'Ysabeau', sans-serif;
+  font-weight: 500;
 }
 
 .page {
@@ -33,6 +34,8 @@ body {
   background: var(--bg);
   padding: 0 var(--side-gap) 40px;
 }
+
+
 
 .site-header {
   position: sticky;
@@ -210,12 +213,12 @@ body {
 }
 
 .hero-kristi {
-  font-family: "Kristi", cursive;
+  font-family: "Manrope", sans-serif;
   font-size: 20px;
   line-height: 0.98;
   color: #666;
+  font-weight: 400;
 }
-
 .hero-abel {
   font-family: "Abel", sans-serif;
   font-size: 16px;
@@ -478,6 +481,16 @@ body {
   transform: translateY(0);
 }
 
+.about-column h2,
+.skills-column h2 {
+  margin: 0 0 28px;
+  font-size: 36px;
+  font-family: "Ysabeau", sans-serif;
+  font-weight: 400;
+  color: #1f1f1f;
+  line-height: 1;
+}
+
 @media (max-width: 1220px) {
   .page { padding-inline: clamp(18px, 4vw, 48px); }
   .site-header { padding-inline: clamp(18px, 4vw, 48px); }
@@ -667,7 +680,12 @@ body {
     left: 12px;
     bottom: 12px;
   }
+
+  
+
 }
+
+
 
 @media (max-width: 540px) {
   .main-nav a { font-size: 14px; }
