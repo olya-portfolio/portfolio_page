@@ -191,17 +191,35 @@ function detectMediaType(url) {
   return 'link';
 }
 
-function createMediaElement(item) {
+
+function applyOrientation(card, orientation) {
+  if (!card) return;
+  card.classList.remove('is-vertical', 'is-horizontal');
+  card.classList.add(orientation === 'vertical' ? 'is-vertical' : 'is-horizontal');
+}
+
+function getOrientationFromUrl(url) {
+  return /(shorts|reels|stories|tiktok)/i.test(url) ? 'vertical' : 'horizontal';
+}
+
+function setOrientationBySize(card, width, height) {
+  if (!width || !height) return;
+  applyOrientation(card, height > width ? 'vertical' : 'horizontal');
+}
+
+function createMediaElement(item, card) {
   const mediaWrap = document.createElement('div');
   mediaWrap.className = 'work-media';
 
   const mediaType = detectMediaType(item.url || '');
+  applyOrientation(card, getOrientationFromUrl(item.url || ''));
 
   if (mediaType === 'image') {
     const img = document.createElement('img');
     img.src = item.url;
     img.alt = item.title || 'Работа';
     img.loading = 'lazy';
+    img.addEventListener('load', () => setOrientationBySize(card, img.naturalWidth, img.naturalHeight), { once: true });
     mediaWrap.append(img);
     return mediaWrap;
   }
@@ -211,6 +229,7 @@ function createMediaElement(item) {
     video.src = item.url;
     video.controls = true;
     video.preload = 'metadata';
+    video.addEventListener('loadedmetadata', () => setOrientationBySize(card, video.videoWidth, video.videoHeight), { once: true });
     mediaWrap.append(video);
     return mediaWrap;
   }
@@ -235,7 +254,7 @@ function createWorkCard(item) {
   const article = document.createElement('article');
   article.className = 'work-card reveal';
 
-  article.append(createMediaElement(item));
+  article.append(createMediaElement(item, article));
 
   const content = document.createElement('div');
   content.className = 'work-content';
