@@ -6,7 +6,7 @@ const SELECTORS = {
   folders: '.folder[data-folder]',
   motion: '[data-motion]',
   toast: '#folder-toast',
-  surfGrid: '#surf-grid',
+  worksGrid: '[data-works-json]',
 };
 
 const SURF_WORKS_PATH = './data/surf-works.json';
@@ -297,34 +297,37 @@ function createWorkCard(item) {
 
   const meta = document.createElement('span');
   meta.className = 'work-meta';
-  meta.textContent = 'SURF COFFEE CASE';
+  meta.textContent = item.caseLabel || 'CASE';
 
   content.append(title, desc, meta);
   article.append(content);
   return article;
 }
 
-async function loadSurfWorks() {
-  const grid = document.querySelector(SELECTORS.surfGrid);
+async function loadWorks() {
+  const grid = document.querySelector(SELECTORS.worksGrid);
   if (!grid) return;
 
+  const worksPath = grid.dataset.worksJson || SURF_WORKS_PATH;
+  const caseLabel = grid.dataset.caseLabel || 'CASE';
+
   try {
-    const response = await fetch(SURF_WORKS_PATH, { cache: 'no-store' });
+    const response = await fetch(worksPath, { cache: 'no-store' });
     if (!response.ok) throw new Error('Не удалось загрузить работы.');
 
     const items = await response.json();
     if (!Array.isArray(items) || !items.length) {
-      grid.innerHTML = '<div class="surf-empty">Пока нет работ. Добавьте первую запись в data/surf-works.json.</div>';
+      grid.innerHTML = `<div class="surf-empty">Пока нет работ. Добавьте первую запись в ${worksPath}.</div>`;
       return;
     }
 
     const fragment = document.createDocumentFragment();
-    items.forEach((item) => fragment.append(createWorkCard(item)));
+    items.forEach((item) => fragment.append(createWorkCard({ ...item, caseLabel })));
     grid.innerHTML = '';
     grid.append(fragment);
     initRevealAnimations();
   } catch (error) {
-    grid.innerHTML = '<div class="surf-empty">Не удалось загрузить кейсы. Проверьте файл data/surf-works.json.</div>';
+    grid.innerHTML = `<div class="surf-empty">Не удалось загрузить кейсы. Проверьте файл ${worksPath}.</div>`;
   }
 }
 
@@ -335,5 +338,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initFolderInteractions();
   initHeroMotion();
   initStickyHeader();
-  loadSurfWorks();
+  loadWorks();
 });
