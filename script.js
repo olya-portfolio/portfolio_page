@@ -124,10 +124,17 @@ function initFolderInteractions() {
   folders.forEach((folder) => {
     folder.addEventListener('click', () => {
       const label = folder.dataset.folder || 'Раздел';
+      const pageUrl = folder.dataset.page;
+      if (pageUrl) {
+        window.location.href = pageUrl;
+        return;
+      }
+
       const targetId = folder.dataset.target;
       if (targetId) {
         scrollToTarget(targetId);
       }
+
       if (label !== 'Surf_Coffee') {
         showToast(label);
       }

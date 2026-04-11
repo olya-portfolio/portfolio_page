@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surf Coffee — Olya Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Abel&family=Bad+Script&family=Caveat:wght@400&family=Golos+Text:wght@400;500;600;700&family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Kristi&family=Manrope:wght@300;400;500;600;700&family=Marck+Script&family=Neucha&family=Onest:wght@300;400;500;600;700&family=Ysabeau:ital,wght@0,1..1000;1,1..1000&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="site-header" id="surf-home" data-section>
+      <div class="logo">Olya</div>
+
+      <nav class="main-nav" aria-label="Меню страницы Surf Coffee">
+        <a class="active" href="#surf-home">Surf Coffee</a>
+        <a href="#surf-coffee">Работы</a>
+        <a href="#surf-how-to">Как добавить</a>
+        <a href="./index.html">На главную</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="surf-works reveal" id="surf-coffee" data-section>
+        <div class="section-head">
+          <p class="section-kicker">SURF COFFEE / CASES</p>
+          <h1>Папка работ Surf Coffee</h1>
+          <p class="section-text">Отдельная страница с кейсами для бренда: фото и видео сразу открываются здесь, без переходов на внешние сервисы.</p>
+        </div>
+
+        <div class="surf-grid" id="surf-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="work-style reveal" id="surf-how-to" data-section>
+        <div class="quote-card">
+          <div class="quote-label">КАК ДОБАВИТЬ НОВУЮ РАБОТУ</div>
+          <blockquote>
+            «Откройте файл <b>data/surf-works.json</b> и добавьте
+            новый объект с <b>url</b>, <b>title</b> и <b>description</b>.
+            Карточка появится автоматически».
+          </blockquote>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
