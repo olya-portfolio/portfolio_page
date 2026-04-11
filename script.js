@@ -226,7 +226,17 @@ function createMediaElement(item, card) {
     img.src = item.url;
     img.alt = item.title || 'Работа';
     img.loading = 'lazy';
+    img.referrerPolicy = 'no-referrer';
+    img.decoding = 'async';
     img.addEventListener('load', () => setOrientationBySize(card, img.naturalWidth, img.naturalHeight), { once: true });
+    img.addEventListener('error', () => {
+      if (!img.dataset.proxyTried && item.url) {
+        img.dataset.proxyTried = '1';
+        img.src = `https://images.weserv.nl/?url=${encodeURIComponent(item.url.replace(/^https?:\/\//, ''))}`;
+        return;
+      }
+      mediaWrap.innerHTML = `<a href="${item.url}" target="_blank" rel="noopener noreferrer">Открыть изображение по ссылке</a>`;
+    });
     mediaWrap.append(img);
     return mediaWrap;
   }
@@ -248,7 +258,6 @@ function createMediaElement(item, card) {
     iframe.title = item.title || 'Встроенное видео';
     iframe.loading = 'lazy';
     iframe.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
-    iframe.allowFullscreen = true;
     mediaWrap.append(iframe);
     return mediaWrap;
   }
@@ -257,13 +266,14 @@ function createMediaElement(item, card) {
   imageFallback.src = item.url || '';
   imageFallback.alt = item.title || 'Работа';
   imageFallback.loading = 'lazy';
+  imageFallback.referrerPolicy = 'no-referrer';
 
   imageFallback.addEventListener('load', () => {
     setOrientationBySize(card, imageFallback.naturalWidth, imageFallback.naturalHeight);
   }, { once: true });
 
   imageFallback.addEventListener('error', () => {
-    mediaWrap.textContent = 'Не удалось загрузить медиа. Для фото используйте прямую ссылку на файл (jpg/png/webp).';
+    mediaWrap.innerHTML = `Не удалось загрузить медиа. Используйте прямую ссылку на файл (jpg/png/webp) или <a href="${item.url || '#'}" target="_blank" rel="noopener noreferrer">откройте ссылку вручную</a>.`;
   }, { once: true });
 
   mediaWrap.append(imageFallback);
