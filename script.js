@@ -17,6 +17,13 @@ function getHeaderOffset() {
   return header ? header.offsetHeight + 12 : 0;
 }
 
+function syncHeaderHeightVar() {
+  const header = document.querySelector(SELECTORS.header);
+  if (!header) return;
+  const measuredHeight = Math.ceil(header.getBoundingClientRect().height);
+  document.documentElement.style.setProperty('--header-height', `${measuredHeight}px`);
+}
+
 function scrollToTarget(targetId) {
   const target = document.querySelector(targetId);
   if (!target) return;
@@ -332,6 +339,7 @@ async function loadWorks() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  syncHeaderHeightVar();
   initSmoothScroll();
   initActiveNav();
   initRevealAnimations();
@@ -339,4 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroMotion();
   initStickyHeader();
   loadWorks();
+
+  window.addEventListener('resize', syncHeaderHeightVar);
+  window.addEventListener('orientationchange', syncHeaderHeightVar);
 });
