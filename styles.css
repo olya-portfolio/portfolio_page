@@ -18,6 +18,8 @@ html,
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  overflow-x: hidden;
   background: var(--bg);
   color: var(--text);
 }
@@ -599,6 +601,7 @@ body {
 
   .hero-main {
     min-height: 0;
+    overflow: hidden;
   }
 
   .photo-window {
