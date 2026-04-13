@@ -18,6 +18,8 @@ html,
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  overflow-x: hidden;
   background: var(--bg);
   color: var(--text);
 }
@@ -649,6 +651,10 @@ body {
     padding-inline: 0;
   }
 
+  .about-skills {
+    margin-top: 14px;
+  }
+
   .about-column h2,
   .skills-column h2 { font-size: 34px; }
 
@@ -873,7 +879,8 @@ body {
 
   .work-card.is-vertical,
   .work-card.is-horizontal {
-    max-width: 560px;
+    width: min(560px, 100%);
+    max-width: 100%;
     grid-template-columns: 1fr;
   }
 
@@ -881,6 +888,18 @@ body {
   .work-card.is-horizontal .work-media {
     aspect-ratio: 9 / 16;
     max-height: min(72vh, 620px);
+  }
+
+  .work-card.is-horizontal .work-media {
+    aspect-ratio: 16 / 9;
+    max-height: min(52vw, 360px);
+  }
+
+  .work-card.is-horizontal .work-media iframe,
+  .work-card.is-horizontal .work-media img,
+  .work-card.is-horizontal .work-media video {
+    object-fit: contain;
+    background: #111;
   }
 }
 
