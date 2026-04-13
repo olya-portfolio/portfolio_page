@@ -653,6 +653,10 @@ body {
     padding-inline: 0;
   }
 
+  .about-skills {
+    margin-top: 14px;
+  }
+
   .about-column h2,
   .skills-column h2 { font-size: 34px; }
 
