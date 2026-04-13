@@ -601,7 +601,8 @@ body {
 
   .hero-main {
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
+    padding-top: 18px;
   }
 
   .photo-window {
@@ -910,6 +911,11 @@ body {
   .surf-works {
     padding-inline: 0;
     padding-top: 34px;
+  }
+
+  .work-card.is-vertical .work-media {
+    width: min(100%, 360px);
+    margin-inline: auto;
   }
 
   .section-text {
