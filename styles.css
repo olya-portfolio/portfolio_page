@@ -601,7 +601,8 @@ body {
 
   .hero-main {
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
+    padding-top: 18px;
   }
 
   .photo-window {
