@@ -913,19 +913,8 @@ body {
   }
 
   .work-card.is-vertical .work-media {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .work-card.is-vertical .work-media iframe,
-  .work-card.is-vertical .work-media img,
-  .work-card.is-vertical .work-media video {
-    width: auto;
-    max-width: 100%;
+    width: min(100%, 360px);
     margin-inline: auto;
-    object-fit: contain;
-    object-position: center;
   }
 
   .section-text {
