@@ -191,12 +191,32 @@ function getRutubeEmbedUrl(url) {
   return `https://rutube.ru/play/embed/${match[1]}`;
 }
 
+function getVkEmbedUrl(url) {
+  if (!url) return null;
+
+  if (/vk\.com\/video_ext\.php/i.test(url)) return url;
+
+  try {
+    const parsedUrl = new URL(url);
+    const directMatch = parsedUrl.pathname.match(/\/video(-?\d+)_([0-9]+)/i);
+    if (!directMatch) return null;
+
+    const oid = directMatch[1];
+    const id = directMatch[2];
+
+    if (!oid || !id) return null;
+    return `https://vk.com/video_ext.php?oid=${oid}&id=${id}`;
+  } catch {
+    return null;
+  }
+}
+
 function detectMediaType(url) {
   const normalizedUrl = (url || '').toLowerCase();
 
   if (/\.(jpg|jpeg|png|webp|gif|avif|heic)(\?|#|$)/i.test(normalizedUrl)) return 'image';
   if (/\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(normalizedUrl)) return 'video';
-  if (/rutube\.ru|youtube\.com|youtu\.be|vimeo\.com/i.test(normalizedUrl)) return 'embed';
+  if (/rutube\.ru|youtube\.com|youtu\.be|vimeo\.com|vkvideo\.ru|vk\.com\/video|vk\.com\/video_ext\.php/i.test(normalizedUrl)) return 'embed';
 
   if (/imgur\.com|flickr\.com|postimg\.|cloudinary\.com|googleusercontent\.com|yandex\./i.test(normalizedUrl)) {
     return 'image';
@@ -261,7 +281,8 @@ function createMediaElement(item, card) {
   if (mediaType === 'embed') {
     const iframe = document.createElement('iframe');
     const rutubeEmbedUrl = getRutubeEmbedUrl(item.url || '');
-    iframe.src = rutubeEmbedUrl || item.url;
+    const vkEmbedUrl = getVkEmbedUrl(item.url || '');
+    iframe.src = rutubeEmbedUrl || vkEmbedUrl || item.url;
     iframe.title = item.title || 'Встроенное видео';
     iframe.loading = 'lazy';
     iframe.allow = 'autoplay; fullscreen; picture-in-picture; encrypted-media';
